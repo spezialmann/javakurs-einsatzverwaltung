@@ -1,8 +1,7 @@
-package com.abi.einsatzplanung;
+package com.abi.einsatzplanung.domain;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 @NoArgsConstructor

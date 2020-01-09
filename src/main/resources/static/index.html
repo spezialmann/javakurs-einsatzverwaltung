@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Einsatzplanung</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+</head>
+<body>
+<h1>Liste der wartenden Einsätze</h1>
+<div id="app">
+    {{ message }}
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        },
+        mounted() {
+            this.$http
+                .get("https://url.api")
+                .then(response => {
+                    return response.json();
+                })
+                .then(
+                    data => {
+                        console.log(data);
+                    },
+                    error => {
+                        // eslint-disable-next-line
+                        console.log(error);
+                    }
+                );
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,5 +1,9 @@
-package com.abi.einsatzplanung;
+package com.abi.einsatzplanung.service;
 
+import com.abi.einsatzplanung.domain.Einsatz;
+import com.abi.einsatzplanung.domain.EinsatzGeber;
+import com.abi.einsatzplanung.domain.List;
+import com.abi.einsatzplanung.domain.Zeitstempel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -9,25 +13,25 @@ public class EinsatzVerwaltung {
 
     static int einsatznummer = 1;
 
-    static EinsatzGeber<Einsatz> wartendeEinsaetze = new EinsatzGeber<>();
-    static List<Einsatz> aktiveEinsaetze = new List<>();
-    static List<Einsatz> archivierteEinsaetze = new List<>();
+    public static EinsatzGeber<Einsatz> wartendeEinsaetze = new EinsatzGeber<>();
+    public static List<Einsatz> aktiveEinsaetze = new List<>();
+    public static List<Einsatz> archivierteEinsaetze = new List<>();
 
-    void neuerNotruf(String pBeschreibung, String pOrt, int pPrioritaet) {
+    public void neuerNotruf(String pBeschreibung, String pOrt, int pPrioritaet) {
         neuerNotruf(pBeschreibung, pOrt, pPrioritaet, 0);
     }
 
-    void neuerNotruf(String pBeschreibung, String pOrt, int pPrioritaet, int minutesBefore) {
+    public void neuerNotruf(String pBeschreibung, String pOrt, int pPrioritaet, int minutesBefore) {
         Einsatz e = new Einsatz(einsatznummer, new Zeitstempel(minutesBefore), pBeschreibung, pOrt, pPrioritaet);
         wartendeEinsaetze.fuegeEin(e);
         einsatznummer++;
     }
 
-    Einsatz gibNaechstenEinsatz() {
+    public Einsatz gibNaechstenEinsatz() {
         return wartendeEinsaetze.gibNaechstenEinsatz();
     }
 
-    void uebertrageNaechstenEinsatz() {
+    public void uebertrageNaechstenEinsatz() {
         aktiveEinsaetze.append(wartendeEinsaetze.gibNaechstenEinsatz());
         wartendeEinsaetze.entferneNaechstenEinsatz();
     }

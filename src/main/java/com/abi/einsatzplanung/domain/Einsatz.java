@@ -1,4 +1,4 @@
-package com.abi.einsatzplanung;
+package com.abi.einsatzplanung.domain;
 
 import lombok.*;
 
@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @ToString
-class Einsatz {
+public class Einsatz {
     private int pEinsatzNummer;
     private String pBeschreibung;
     private String pEinsatzort;

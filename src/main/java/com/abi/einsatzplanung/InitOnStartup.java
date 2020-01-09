@@ -1,10 +1,12 @@
 package com.abi.einsatzplanung;
 
+import com.abi.einsatzplanung.domain.Einsatz;
+import com.abi.einsatzplanung.service.EinsatzVerwaltung;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import static com.abi.einsatzplanung.EinsatzVerwaltung.*;
+import static com.abi.einsatzplanung.service.EinsatzVerwaltung.*;
 
 @Slf4j
 @Component

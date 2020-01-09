@@ -1,4 +1,4 @@
-package com.abi.einsatzplanung;
+package com.abi.einsatzplanung.domain;
 
 import lombok.ToString;
 
