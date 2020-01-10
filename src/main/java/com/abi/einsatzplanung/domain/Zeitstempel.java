@@ -1,11 +1,15 @@
 package com.abi.einsatzplanung.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 @ToString
+@Getter
+@Setter
 public class Zeitstempel {
     private LocalDateTime start;
     private LocalDateTime jetzt;
@@ -20,7 +24,7 @@ public class Zeitstempel {
     }
 
     private void init(int minutesBefore) {
-        Long l = new Long(minutesBefore);
+        Long l = (long) minutesBefore;
         this.start = LocalDateTime.of(2000, 1,1,0,0,0,0);
         this.jetzt = LocalDateTime.now().minusMinutes(l);
 
