@@ -20,6 +20,7 @@ public class EinsatzGeber<ContentType> extends List {
                 //Iteration bis Prio neue Aktivitaet kleiner als Prio Eintrag aus Liste
                 while (this.hasAccess() && (pEinsatz.getPPrioritaet() <= current.getPPrioritaet()) ) {
                     this.next();
+                    current = (Einsatz)this.getContent();
                 }
                 //Wenn ein Eintrag auf diesem Listenplatz, dann davor einfuegen
                 if(this.hasAccess()) {
