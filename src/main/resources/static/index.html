@@ -15,7 +15,7 @@
                 <h1>Liste der wartenden Einsätze</h1>
                 <ul id="example-1">
                     <li v-for="einsatz in einsaetze">
-                        {{ einsatz.peinsatzNummer }} {{ einsatz.pbeschreibung }}
+                        {{ einsatz.peinsatzNummer }} {{ einsatz.pbeschreibung }} (Prio: {{ einsatz.pprioritaet }})
                     </li>
                 </ul>
             </v-container>
