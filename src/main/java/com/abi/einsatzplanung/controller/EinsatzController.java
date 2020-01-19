@@ -17,10 +17,11 @@ public class EinsatzController {
     public EinsatzController(EinsatzVerwaltung einsatzVerwaltung) {
         this.einsatzVerwaltung = einsatzVerwaltung;
         this.einsatzVerwaltung.neuerNotruf("Ruhestörung", "Lange Straße 12", 2, 5);
-        this.einsatzVerwaltung.neuerNotruf("Leichter Verkehrsunfall (nur Blechschaden)", "Steinstraße 2", 1, 1);
-        Einsatz einsatz = einsatzVerwaltung.gibNaechstenEinsatz();
-        this.einsatzVerwaltung.uebertrageNaechstenEinsatz();
-        this.einsatzVerwaltung.neuerNotruf("Verkehrsunfall mit Personenschaden", "Bergstraße 55", 3);
+        this.einsatzVerwaltung.neuerNotruf("Leichter Verkehrsunfall (nur Blechschaden)", "Steinstraße 2", 1, 2);
+//        Einsatz einsatz = einsatzVerwaltung.gibNaechstenEinsatz();
+//        this.einsatzVerwaltung.uebertrageNaechstenEinsatz();
+        this.einsatzVerwaltung.neuerNotruf("Verkehrsunfall mit Personenschaden", "Bergstraße 55", 3, 1);
+        this.einsatzVerwaltung.neuerNotruf("Häusliche Gewalt", "Musterweg 123", 3);
 
 
     }
