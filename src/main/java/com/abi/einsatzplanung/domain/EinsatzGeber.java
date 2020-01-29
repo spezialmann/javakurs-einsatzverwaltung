@@ -1,5 +1,6 @@
 package com.abi.einsatzplanung.domain;
 
+import com.abi.einsatzplanung.service.EinsatzVerwaltung;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,33 +8,59 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 public class EinsatzGeber<ContentType> extends List {
 
+    
+    
+    
+    
+    
+    
 
     public void fuegeEin(Einsatz pEinsatz) {
-        if(pEinsatz!=null) {
-            if(this.isEmpty()) {
+        
+        //neuer Einsatz nicht null?
+        if(pEinsatz != null) {
+            //Wenn Liste noch komplett leer, dann einfach als ersten Einsatz einfuegen
+            if(this.isEmpty() ) {
                 this.append(pEinsatz);
             }
             else {
-                //Zeiger auf ersten Eintrag
+                //Zum Anfang der Liste
                 this.toFirst();
-                Einsatz current = (Einsatz)this.getContent();
-                //Iteration bis Prio neue Aktivitaet kleiner als Prio Eintrag aus Liste
-                while (this.hasAccess() && (pEinsatz.getPPrioritaet() <= current.getPPrioritaet()) ) {
-                    this.next();
-                    current = (Einsatz)this.getContent();
+                boolean richtigeStelleGefunden = false;
+                //"zeiger" an die richtige Stelle in der Liste setzen
+                while ( this.hasAccess() && !richtigeStelleGefunden ) {
+                    Einsatz aktueller = (Einsatz) this.getContent();
+                    if (pEinsatz.getPPrioritaet() <= aktueller.getPPrioritaet()) {
+                        this.next();
+                    } 
+                    else {
+                        richtigeStelleGefunden = true;
+                    }
                 }
-                //Wenn ein Eintrag auf diesem Listenplatz, dann davor einfuegen
-                if(this.hasAccess()) {
-                    this.insert(pEinsatz);
-                }
-                //Sonst als neuen letzten Eintrag anfuegen
-                else {
+                
+                
+                //ist Feld noch nicht belegt, dann anhaengen
+                if(!this.hasAccess()){
                     this.append(pEinsatz);
+                }
+                //sonst davor einfuegen
+                else {
+                    this.insert(pEinsatz);
                 }
             }
         }
+        
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public Einsatz gibNaechstenEinsatz() {
         Einsatz ret = null;
         this.toFirst();
