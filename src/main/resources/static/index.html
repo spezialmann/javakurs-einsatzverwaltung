@@ -1,56 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-</head>
-<body>
-<div id="app">
-    <v-app>
-        <v-content>
-            <v-container>
-                <h1>Liste der wartenden Einsätze</h1>
-                <ul id="example-1">
-                    <li v-for="einsatz in einsaetze">
-                        {{ einsatz.peinsatzNummer }} {{ einsatz.pbeschreibung }} (Prio: {{ einsatz.pprioritaet }})
-                    </li>
-                </ul>
-            </v-container>
-        </v-content>
-    </v-app>
-</div>
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    </head>
+    <body>
+        <div id="app">
+            <v-app>
+                <v-content>
+                    <v-form id="nativeForm" action="http://localhost:8083/api/v1/einsaetze/notruf" method="GET">
+                        <v-container>
+                            <v-row>
+                                <v-col
+                                    cols="12"
+                                    md="4"
+                                    >
+                                    <v-text-field
+                                        v-model="beschreibung"
+                                        :counter="100"
+                                        label="Beschreibung"
+                                        required
+                                        name="beschreibung"
+                                        ></v-text-field>
+                                </v-col>
 
-<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
-<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
-<script>
-    new Vue({
-        el: '#app',
-        data: {
-            einsaetze: []
-        },
-        mounted() {
-            this.$http
-                .get("http://localhost:8083/api/v1/einsaetze/wartend")
-                .then(response => {
-                    return response.json();
-                })
-                .then(
-                    data => {
-                        console.log(data);
-                        this.einsaetze = data;
+                                <v-col
+                                    cols="12"
+                                    md="4"
+                                    >
+                                    <v-text-field
+                                        v-model="ort"
+                                        :counter="80"
+                                        label="Ort"
+                                        required
+                                        name="ort"
+                                        ></v-text-field>
+                                </v-col>
+
+                                <v-col
+                                    cols="12"
+                                    md="4"
+                                    >
+                                    <v-radio-group>
+                                        <v-radio
+                                            v-for="n in 3"
+                                            :key="n"
+                                            :label="`Priorität ${n}`"
+                                            :value="n"
+                                            name="prio"
+                                            ></v-radio>
+                                    </v-radio-group>
+                                </v-col>
+                            </v-row>
+                            <v-btn @click="submit">submit</v-btn>
+                        </v-container>
+                    </v-form>
+                    <v-container>
+                        <h1>Liste der wartenden Einsätze</h1>
+                        <ul id="example-1">
+                            <li v-for="einsatz in einsaetze">
+                                {{ einsatz.peinsatzNummer }} {{ einsatz.pbeschreibung }} (Prio: {{ einsatz.pprioritaet }})
+                            </li>
+                        </ul>
+                    </v-container>
+                </v-content>
+            </v-app>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    einsaetze: [],
+                    beschreibung: "",
+                    ort: "",
+                },
+                methods: {
+                    submit() {
+                        nativeForm.submit()
                     },
-                    error => {
-                        // eslint-disable-next-line
-                        console.log(error);
+                    reload() {
+                        this.$http
+                            .get("http://localhost:8083/api/v1/einsaetze/wartend")
+                            .then(response => {
+                                return response.json();
+                            })
+                            .then(
+                                data => {
+                                    console.log(data);
+                                    this.einsaetze = data;
+                                },
+                        error => {
+                            // eslint-disable-next-line
+                            console.log(error);
+                        }
+                        )
                     }
-                );
-        },
-        vuetify: new Vuetify(),
-    })
-</script>
-</body>
+                    
+                },
+                mounted() {
+                    this.reload();
+                },
+                vuetify: new Vuetify(),
+                })
+        </script>
+    </body>
 </html>

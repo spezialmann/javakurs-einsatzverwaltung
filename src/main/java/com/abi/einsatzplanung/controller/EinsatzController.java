@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Slf4j
 @RestController
 public class EinsatzController {
+
     private EinsatzVerwaltung einsatzVerwaltung;
 
     public EinsatzController(EinsatzVerwaltung einsatzVerwaltung) {
@@ -22,7 +25,6 @@ public class EinsatzController {
 //        this.einsatzVerwaltung.uebertrageNaechstenEinsatz();
         this.einsatzVerwaltung.neuerNotruf("Verkehrsunfall mit Personenschaden", "Bergstraße 55", 3, 1);
         this.einsatzVerwaltung.neuerNotruf("Häusliche Gewalt", "Musterweg 123", 3);
-
 
     }
 
@@ -36,5 +38,14 @@ public class EinsatzController {
             einsatzVerwaltung.wartendeEinsaetze.next();
         }
         return ret;
+    }
+    
+    @GetMapping("/api/v1/einsaetze/notruf")
+    public RedirectView neuerNotruf(@RequestParam(name = "beschreibung") String beschreibung, 
+                                    @RequestParam(name = "ort") String ort, 
+                                    @RequestParam(name = "prio") int prio) {
+        this.einsatzVerwaltung.neuerNotruf(beschreibung, ort, prio);
+        log.info("Neuer Einsatz: " + beschreibung);
+        return new RedirectView("/");
     }
 }
